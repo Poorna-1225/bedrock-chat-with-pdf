@@ -6,11 +6,6 @@ services:
     image: ragbot-backend
     ports: 
       - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl","--fail", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     env_file:
       - .env
     depends_on:
@@ -19,7 +14,7 @@ services:
       - ragbot-network
     command: ["uvircorn","main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     volumes:
-      -./backend: /app
+      - ./backend: /app
 
 
 
@@ -33,20 +28,22 @@ services:
     networks:
       - ragbot-network
     volumes:
-      -./frontend: /app
-
+      - ./frontend: /app
+    
   redis:
-   image: redis:alpine
-   ports:
-     - "6379:6379"
-   volumes:
-     - redis_data: /data
-  networks:
-     - ragbot-network
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ragbot-network
+
+
 
 volumes:
   - redis_data:
 
 networks:
   ragbot-network:
-   driver: bridge
+    driver: bridge
