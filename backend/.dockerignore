@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.git/
+*.env 
+*.md
+C:\Users\mglch\anaconda3\envs\rag_bot_backend
